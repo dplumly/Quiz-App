@@ -3,7 +3,7 @@
         <h2>Quiz Instructions</h2>
         <p>Read the instructions carefully before starting.</p>
 
-        <NextButton class="next-button" type="primary" @click="$router.push('/quiz')">Next</NextButton>
+        <MainButton class="next-button" type="primary" @click="$router.push('/quiz')">Next</MainButton>
     </div>
 </template>
 
@@ -31,10 +31,10 @@ p {
 </style>
 
 <script>
-import NextButton from "@/components/NextButton.vue";
+import MainButton from "@/components/MainButton.vue";
 export default {
     components: {
-        NextButton,
+        MainButton,
     },
 };
 </script>

@@ -6,7 +6,7 @@
 			<source src="/frontend/public/attract-bg.mp4" type="video/mp4">
 		</video>
 
-		<NextButton id="attract-button" @click="$router.push('/instructions')">Tap to begin.</NextButton>
+		<MainButton id="attract-button" @click="$router.push('/instructions')">Tap to begin.</MainButton>
 	</div>
 </template>
 
@@ -29,10 +29,10 @@ h1 {
 
 
 <script>
-import NextButton from "@/components/NextButton.vue";
+import MainButton from "@/components/MainButton.vue";
 export default {
     components: {
-        NextButton,
+        MainButton,
     },
 };
 </script>
