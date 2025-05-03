@@ -22,112 +22,6 @@
 
 </template>
   
-<script>
-export default {
-
-    // Question data - add here if you need to add questions
-    data() {
-      return {
-        currentIndex: 0,
-        questions: [
-          { text: "What is 2 + 2?", options: ["3", "4", "5"], answer: "4" },
-          { text: "What is the capital of France?", options: ["Paris", "London", "Berlin"], answer: "Paris" },
-          { text: "What is the color of the sky?", options: ["Blue", "Green", "Red"], answer: "Blue" }
-        ],
-        userAnswers: [],
-      };
-    },
-
-    computed: {
-        currentQuestion() {
-            return this.questions[this.currentIndex];
-        },
-        progressPercentage() {
-            return ((this.currentIndex + 1) / this.questions.length) * 100;
-        },
-        isAnswerSelected() {
-            return !!this.userAnswers[this.currentIndex];
-        }
-    },
-
-    // Button methods
-    methods: {
-        selectAnswer(option) {
-            this.userAnswers[this.currentIndex] = option;
-        },
-        nextQuestion() {
-            if (this.currentIndex < this.questions.length - 1) {
-                this.currentIndex++;
-            }
-        },
-        prevQuestion() {
-            if (this.currentIndex > 0) {
-            this.currentIndex--;
-            }
-        },
-
-
-    submitQuiz() {
-        console.log("User answers:", this.userAnswers);
-
-        const correctCount = this.questions.reduce((count, question, index) => {
-            return count + (this.userAnswers[index] === question.answer ? 1 : 0);
-        }, 0);
-
-        fetch('http://localhost:3000/submit-quiz', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answers: this.userAnswers })
-        })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(data => {
-                console.log('Server response:', data);
-
-            // Pass the score to the results page using route query or state
-            this.$router.push({
-                path: '/results',
-                query: { score: correctCount, total: this.questions.length }
-                });
-            })
-            .catch(error => {
-            console.error('Error submitting quiz:', error);
-        });
-    }
-}
-
-        // Submitting quiz to CSV
-    //     submitQuiz() {
-    //         console.log("User answers:", this.userAnswers);
-            
-    //         fetch('http://localhost:3000/submit-quiz', {
-    //             method: 'POST',  
-    //             headers: {
-    //             'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({
-    //             answers: this.userAnswers
-    //             })
-    //         })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //             }
-    //             return response.text();
-    //         })
-    //         .then(data => {
-    //             console.log('Server response:', data);
-    //             this.$router.push("/results");
-    //         })
-    //         .catch(error => {
-    //             console.error('Error submitting quiz:', error);
-    //         });
-    //     },
-    // },
-};
-</script>
   
 <style scoped>
 h2 {
@@ -175,10 +69,6 @@ h2 {
     transition: width 0.3s ease-in-out;
 }
 
-/* #button-container {
-    position: relative;
-} */
-  
 button {
     width: 700px;
     height: 100px;
@@ -216,8 +106,84 @@ button:disabled {
 .isSelected {
     background-color: #7A2048;
 }
-  </style>
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      currentIndex: 0,
+      questions: [],
+      userAnswers: [],
+    };
+  },
+
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentIndex] || { text: '', options: [] };
+    },
+    progressPercentage() {
+      return this.questions.length
+        ? ((this.currentIndex + 1) / this.questions.length) * 100
+        : 0;
+    },
+    isAnswerSelected() {
+      return !!this.userAnswers[this.currentIndex];
+    }
+  },
+
+  methods: {
+    async loadQuestions() {
+      try {
+        const res = await fetch('/frontend/public/questionnaire.json'); 
+        const data = await res.json();
+        this.questions = data;
+      } catch (error) {
+        console.error("Failed to load questions:", error);
+      }
+    },
+    selectAnswer(option) {
+      this.userAnswers[this.currentIndex] = option;
+    },
+    nextQuestion() {
+      if (this.currentIndex < this.questions.length - 1) {
+        this.currentIndex++;
+      }
+    },
+    prevQuestion() {
+      if (this.currentIndex > 0) {
+        this.currentIndex--;
+      }
+    },
+    submitQuiz() {
+      const correctCount = this.questions.reduce((count, question, index) => {
+        return count + (this.userAnswers[index] === question.answer ? 1 : 0);
+      }, 0);
+
+      fetch('http://localhost:3000/submit-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ answers: this.userAnswers })
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+      })
+      .then(() => {
+        this.$router.push({
+          path: '/results',
+          query: { score: correctCount, total: this.questions.length }
+        });
+      })
+      .catch(error => {
+        console.error('Error submitting quiz:', error);
+      });
+    }
+  },
+
+  mounted() {
+    this.loadQuestions();
+  }
+};
+</script>  
   
-
-
-
