@@ -1,27 +1,31 @@
 <template>
     <div>
-        <h2>{{ currentQuestion.text }}</h2>
-        <h4>{{ currentIndex + 1 }}/{{ questions.length }}</h4>
-  
-        <div class="progress-container">
-            <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
-        </div>
+        <transition name="fade" mode="out-in">
+            <h2 :key="currentIndex">{{ currentQuestion.text }}</h2>
+        </transition>
+
   
         <div id="questions">
             <button v-for="(option, index) in currentQuestion.options" :key="index" @click="selectAnswer(option)" :class="{ isSelected: userAnswers[currentIndex] === option }"> {{ option }}</button>
         </div>
   
-        <div>
             <button class="back-button"  v-if="currentIndex > 0" @click="prevQuestion">Back</button>
-            <button class="next-button" v-if="currentIndex < questions.length - 1" :disabled="!isAnswerSelected" @click="nextQuestion">Next</button>
-            <button class="submit-button" v-if="currentIndex === questions.length - 1" @click="submitQuiz">Submit</button>          
+            <button class="next-button" v-if="currentIndex < questions.length - 1" :disabled="!isAnswerSelected" @click="nextQuestion">Next</button>        
+            <button class="submit-button" v-if="currentIndex === questions.length - 1" :disabled="!isAnswerSelected" @click="submitQuiz">Submit</button>  
+
+        <div id="progress-bar-positioning">
+            <div class="progress-container">
+                <div class="progress-bar" :style="{ width: progressPercentage + '%' }"></div>
+            </div>
         </div>
     </div>
+
 </template>
   
 <script>
 export default {
 
+    // Question data - add here if you need to add questions
     data() {
       return {
         currentIndex: 0,
@@ -46,18 +50,11 @@ export default {
         }
     },
 
+    // Button methods
     methods: {
         selectAnswer(option) {
             this.userAnswers[this.currentIndex] = option;
         },
-        // nextQuestion() {
-        //     if (this.userAnswers[this.currentIndex]) {
-        //         if (this.currentIndex < this.questions.length - 1) {
-        //             this.currentIndex++;
-        //         }
-        //     } 
-        // },
-
         nextQuestion() {
             if (this.currentIndex < this.questions.length - 1) {
                 this.currentIndex++;
@@ -68,67 +65,130 @@ export default {
             this.currentIndex--;
             }
         },
-        submitQuiz() {
-            console.log("User answers:", this.userAnswers);
-            
-            fetch('http://localhost:3000/submit-quiz', {
-                method: 'POST',  
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                answers: this.userAnswers
-                })
-            })
+
+
+    submitQuiz() {
+        console.log("User answers:", this.userAnswers);
+
+        const correctCount = this.questions.reduce((count, question, index) => {
+            return count + (this.userAnswers[index] === question.answer ? 1 : 0);
+        }, 0);
+
+        fetch('http://localhost:3000/submit-quiz', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answers: this.userAnswers })
+        })
             .then(response => {
-                if (!response.ok) {
-                throw new Error('Network response was not ok');
-                }
+                if (!response.ok) throw new Error('Network response was not ok');
                 return response.text();
             })
             .then(data => {
                 console.log('Server response:', data);
-                this.$router.push("/results");
+
+            // Pass the score to the results page using route query or state
+            this.$router.push({
+                path: '/results',
+                query: { score: correctCount, total: this.questions.length }
+                });
             })
             .catch(error => {
-                console.error('Error submitting quiz:', error);
-            });
-        },
-    },
+            console.error('Error submitting quiz:', error);
+        });
+    }
+}
+
+        // Submitting quiz to CSV
+    //     submitQuiz() {
+    //         console.log("User answers:", this.userAnswers);
+            
+    //         fetch('http://localhost:3000/submit-quiz', {
+    //             method: 'POST',  
+    //             headers: {
+    //             'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //             answers: this.userAnswers
+    //             })
+    //         })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //             }
+    //             return response.text();
+    //         })
+    //         .then(data => {
+    //             console.log('Server response:', data);
+    //             this.$router.push("/results");
+    //         })
+    //         .catch(error => {
+    //             console.error('Error submitting quiz:', error);
+    //         });
+    //     },
+    // },
 };
 </script>
   
 <style scoped>
 h2 {
-    display: table;
-    margin: 50px auto;
     text-align: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 400px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#questions {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 800px;
+    display: grid;
+    justify-content: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
   
 .progress-container {
-    width: 100%;
+    width: 75%;
     height: 10px;
     background-color: #e0e0e0;
     border-radius: 5px;
     overflow: hidden;
-    margin-top: 10px;
+    margin: 10px auto;
+    position: relative;
+    top: 1400px;
 }
   
 .progress-bar {
     height: 100%;
-    background-color: #4caf50;
+    background-color: #7A2048;
     transition: width 0.3s ease-in-out;
 }
+
+/* #button-container {
+    position: relative;
+} */
   
 button {
-    width: 400px;
+    width: 700px;
     height: 100px;
-    font-size: 32px;
-    margin: 10px 0;
+    font-size: 36px;
+    margin: 15px 0;
     border: none;
-    background-color: aqua;
+    background-color: #408EC6;
     border-radius: 50px;
     transition: 0.5s;
+    color: #EDEDED;
 }
 
 button:disabled {
@@ -137,25 +197,24 @@ button:disabled {
     opacity: 0.6;
 }
   
-#questions {
-    display: grid;
-    justify-content: center;
-}
-  
 .next-button, .submit-button {
     position: absolute;
     bottom: 200px;
     right: 100px;
+    width: 280px;
+    height: 100px;
 }
   
 .back-button {
     position: absolute;
     bottom: 200px;
     left: 100px;
+    width: 280px;
+    height: 100px;
 }
   
 .isSelected {
-    background-color: red;
+    background-color: #7A2048;
 }
   </style>
   

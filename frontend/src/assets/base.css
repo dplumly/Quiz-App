@@ -6,13 +6,77 @@
   font-weight: normal;
 }
 
-h1 { font-size: 72px; }
-h2 { font-size: 64px; }
-h3 { font-size: 56px; }
-h4 { font-size: 48px; }
-h5 { font-size: 40px; }
-h6 { font-size: 32px; }
-p  { font-size: 24px; }
+
+/*==============================================
+Fonts 
+==============================================*/
+@font-face {
+    font-family: 'Poppins-Black';
+    src: url('fonts/Poppins-Black.ttf') format('truetype'),
+         url('fonts/Poppins-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Poppins-Bold';
+    src: url('fonts/Poppins-Bold.ttf') format('truetype'),
+         url('fonts/Poppins-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Poppins-Regular';
+    src: url('fonts/Poppins-Regular.ttf') format('truetype'),
+         url('fonts/Poppins-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Poppins-Light';
+    src: url('fonts/Poppins-Light.ttf') format('truetype'),
+         url('fonts/Poppins-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+  }
+
+h1 { 
+    font-size: 84px;
+    font-family: 'Poppins-Black', Sans-Serif; 
+    line-height: 80px;
+}
+h2 { 
+    font-size: 72px; 
+    font-family: 'Poppins-Bold', Sans-Serif; 
+    line-height: 80px;
+}
+h3 { 
+    font-size: 56px;
+    font-family: 'Poppins-Regular', Sans-Serif;
+    line-height: 55px;
+}
+h4 { 
+    font-size: 48px;
+    font-family: 'Poppins-Light', Sans-Serif; 
+    line-height: 55px;
+}
+h5 { 
+    font-size: 40px; 
+    font-family: 'Poppins-Light', Sans-Serif;
+    line-height: 55px;
+}
+h6 { 
+    font-size: 32px;
+    font-family: 'Poppins-Light', Sans-Serif;
+    line-height: 55px;
+}
+p  { 
+    font-size: 24px; 
+    font-family: 'Poppins-Light', Sans-Serif;
+    line-height: 55px;
+}
 
 
 
@@ -26,7 +90,7 @@ body {
 		color 0.5s,
 		background-color 0.5s;
 	line-height: 1.6;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: 'Poppins-Regular', Sans-Serif;
 	color: #ffffff;
     background-color: #030303;
 }

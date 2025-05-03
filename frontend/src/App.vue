@@ -14,9 +14,15 @@
         <!-- Gives the pages a fade transition -->
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
-            <component :is="Component" />
+                <component :is="Component" />
             </transition>
         </router-view>
+
+        <!-- <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+                <component :is="Component" :key="$route.fullPath" />
+            </transition>
+        </router-view> -->
 	</div>
   </template>
 

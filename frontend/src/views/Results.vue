@@ -1,7 +1,23 @@
 <template>
     <div>
-        <h2>You did it!</h2>
-        <p>You are great!!!</p>
+
+        <transition name="fade" mode="out-in">
+            <div v-if="delayHeading">
+                <img src="/frontend/public/party.png">
+                <h2>You did it!</h2>
+                <h3 id="score">You got {{ score }}/{{ total }} correct!</h3>
+            </div>
+        </transition>
+
+        
+
+        <video 
+            autoplay 
+            muted 
+            playsinline 
+            class="bg-video">
+			<source src="/frontend/public/Results-bg.mp4" type="video/mp4">
+		</video>
 
         <MainButton class="finish-button" type="primary" @click="$router.push('/')">Finish</MainButton>
     </div>
@@ -9,15 +25,32 @@
 
 
 <style scoped>
-h2 {
-    display: table;
-    margin: 0 auto;
-    margin: 500px auto 0 auto;
+/* #lottie-container {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    bottom: 50px;
+    right: 50px;
+} */
+
+img {
+    position: absolute;
+    top: 320px;
+    right: 0;
+    left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-inline: auto; 
+    width: 135px;
 }
 
-p {
-    margin: 0 auto;
+h2 {
     display: table;
+    margin: 500px auto 30px auto;
+}
+
+#score {
+    margin: 100px auto 0 auto;
     text-align: center;
 }
 
@@ -28,13 +61,92 @@ p {
     left: 0; 
     margin-inline: auto; 
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 </style>
+
+
+
+
+
 
 <script>
 import MainButton from "@/components/MainButton.vue";
+
 export default {
+    data() {
+        return {
+            delayHeading: false
+        };
+    },
+
+    mounted() {
+        setTimeout(() => {
+            this.delayHeading = true;
+        }, 1000);
+    },
+
     components: {
         MainButton,
     },
+
+  computed: {
+    score() {
+      return this.$route.query.score || 0;
+    },
+    total() {
+      return this.$route.query.total || 0;
+    }
+  },
 };
 </script>
+
+
+
+
+
+
+
+<!-- <script>
+import MainButton from "@/components/MainButton.vue";
+
+export default {
+  components: {
+    MainButton,
+  },
+  computed: {
+    score() {
+      return this.$route.query.score || 0;
+    },
+    total() {
+      return this.$route.query.total || 0;
+    }
+  },
+  mounted() {
+    const script = document.createElement('script');
+    script.src = '/lottiePlayer.js'; // No "/frontend/public/"
+    script.async = true;
+
+    script.onload = () => {
+      const container = document.getElementById('lottie-container');
+      lottie.loadAnimation({
+        container: container,
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        path: '/data.json' // Make sure path is correct as well
+      });
+    };
+
+    document.body.appendChild(script);
+  },
+};
+</script> -->
+
+
+

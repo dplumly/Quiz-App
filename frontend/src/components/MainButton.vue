@@ -36,24 +36,24 @@ button {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    color: white;
-    width: 300px;
-    height: 60px;
-    font-size: 24px;
+    background-color: #242E6C;
+    color: #EDEDED;
+    width: 450px;
+    height: 85px;
+    font-size: 40px;
     border-radius: 50px;
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    color: white;
-    width: 300px;
-    height: 60px;
-    font-size: 24px;
+    background-color: #408EC6;
+    color: #EDEDED;
+    width: 450px;
+    height: 85px;
+    font-size: 40px;
     border-radius: 50px;
 }
 
-.isSelected {
+/* .isSelected {
   background-color: red !important;
-}
+} */
 </style>
