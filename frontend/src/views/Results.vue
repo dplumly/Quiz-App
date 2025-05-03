@@ -3,7 +3,9 @@
 
         <transition name="fade" mode="out-in">
             <div v-if="delayHeading">
-                <img src="/frontend/public/party.png">
+                <!-- <img src="/frontend/public/party.png"> -->
+                <DotLottieVue id="lottie-container" autoplay loop src="/frontend/public/data.json" />
+
                 <h2>You did it!</h2>
                 <h3 id="score">You got {{ score }}/{{ total }} correct!</h3>
             </div>
@@ -25,13 +27,17 @@
 
 
 <style scoped>
-/* #lottie-container {
+#lottie-container {
     position: absolute;
-    width: 250px;
-    height: 250px;
-    bottom: 50px;
-    right: 50px;
-} */
+    width: 350px;
+    height: 350px;
+    top: 165px;
+    right: 0;
+    left: 50px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-inline: auto;
+}
 
 img {
     position: absolute;
@@ -72,7 +78,9 @@ h2 {
 
 
 
-
+<script setup>
+    import { DotLottieVue } from '@lottiefiles/dotlottie-vue'
+</script>
 
 
 <script>
