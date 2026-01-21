@@ -155,30 +155,45 @@ export default {
         this.currentIndex--;
       }
     },
-    submitQuiz() {
-      const correctCount = this.questions.reduce((count, question, index) => {
-        return count + (this.userAnswers[index] === question.answer ? 1 : 0);
-      }, 0);
+    // submitQuiz() {
+    //   const correctCount = this.questions.reduce((count, question, index) => {
+    //     return count + (this.userAnswers[index] === question.answer ? 1 : 0);
+    //   }, 0);
 
-      fetch('http://localhost:3000/submit-quiz', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: this.userAnswers })
-      })
-      .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.text();
-      })
-      .then(() => {
+    //   fetch('http://localhost:3000/submit-quiz', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ answers: this.userAnswers })
+    //   })
+    //   .then(response => {
+    //     if (!response.ok) throw new Error('Network response was not ok');
+    //     return response.text();
+    //   })
+    //   .then(() => {
+    //     this.$router.push({
+    //       path: '/results',
+    //       query: { score: correctCount, total: this.questions.length }
+    //     });
+    //   })
+    //   .catch(error => {
+    //     console.error('Error submitting quiz:', error);
+    //   });
+    // }
+
+    submitQuiz() {
+        const correctCount = this.questions.reduce((count, question, index) => {
+            return count + (this.userAnswers[index] === question.answer ? 1 : 0);
+        }, 0);
+
         this.$router.push({
-          path: '/results',
-          query: { score: correctCount, total: this.questions.length }
+            path: '/results',
+            query: {
+            score: correctCount,
+            total: this.questions.length
+            }
         });
-      })
-      .catch(error => {
-        console.error('Error submitting quiz:', error);
-      });
     }
+
   },
 
   mounted() {
