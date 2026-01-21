@@ -1,0 +1,22 @@
+[
+    {
+      "text": "What is 2 + 2?",
+      "options": ["3", "4", "5"],
+      "answer": "4"
+    },
+    {
+      "text": "What is the capital of France?",
+      "options": ["Paris", "London", "Berlin"],
+      "answer": "Paris"
+    },
+    {
+      "text": "What is the color of the sky?",
+      "options": ["Blue", "Green", "Red"],
+      "answer": "Blue"
+    },
+    {
+        "text": "How long is a foot?",
+        "options": ["8in", "6cm", "12in"],
+        "answer": "12in"
+    }
+  ]
