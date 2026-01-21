@@ -77,7 +77,7 @@ button {
     border: none;
     background-color: #408EC6;
     border-radius: 50px;
-    transition: 0.3s;
+    transition: 0.5s;
     color: #EDEDED;
 }
 
@@ -124,7 +124,7 @@ export default {
     },
     progressPercentage() {
       return this.questions.length
-        ? ((this.currentIndex + 1) / this.questions.length) * 100
+        ? ((this.currentIndex) / this.questions.length) * 100
         : 0;
     },
     isAnswerSelected() {
@@ -135,7 +135,7 @@ export default {
   methods: {
     async loadQuestions() {
       try {
-        const res = await fetch('/frontend/public/questions/questionnaire.json'); 
+        const res = await fetch('/public/questionnaire.json'); 
         const data = await res.json();
         this.questions = data;
       } catch (error) {

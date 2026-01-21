@@ -8,7 +8,7 @@
             loop muted 
             playsinline 
             class="bg-video">
-			<source src="/frontend/public/videos/attract-bg.mp4" type="video/mp4">
+			<source src="/public/attract-bg.mp4" type="video/mp4">
 		</video>
 
 		<MainButton id="attract-button" @click="$router.push('/instructions')">Tap to begin.</MainButton>

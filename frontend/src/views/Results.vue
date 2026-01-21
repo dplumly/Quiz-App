@@ -4,7 +4,7 @@
         <transition name="fade" mode="out-in">
             <div v-if="delayHeading">
                 <!-- <img src="/frontend/public/party.png"> -->
-                <DotLottieVue id="lottie-container" autoplay loop src="/frontend/public/data.json" />
+                <DotLottieVue id="lottie-container" autoplay loop src="/public/data.json" />
 
                 <h2>You did it!</h2>
                 <h3 id="score">You got {{ score }}/{{ total }} correct!</h3>
@@ -18,7 +18,7 @@
             muted 
             playsinline 
             class="bg-video">
-			<source src="/frontend/public/videos/results-bg.mp4" type="video/mp4">
+			<source src="/public/Results-bg.mp4" type="video/mp4">
 		</video>
 
         <MainButton class="finish-button" type="primary" @click="$router.push('/')">Finish</MainButton>
