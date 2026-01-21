@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <h2>Quiz Instructions</h2>
         <h5>Read the instructions carefully <br> before starting.</h5>
         <div id="white-circle"></div>
@@ -53,6 +54,10 @@ h5 {
     border-radius: 50%;
 }
 </style>
+
+
+
+
 
 <script>
 import MainButton from "@/components/MainButton.vue";

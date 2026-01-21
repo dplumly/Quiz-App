@@ -18,7 +18,7 @@
             muted 
             playsinline 
             class="bg-video">
-			<source src="/frontend/public/Results-bg.mp4" type="video/mp4">
+			<source src="/frontend/public/videos/results-bg.mp4" type="video/mp4">
 		</video>
 
         <MainButton class="finish-button" type="primary" @click="$router.push('/')">Finish</MainButton>

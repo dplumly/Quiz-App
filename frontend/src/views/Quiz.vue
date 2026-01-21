@@ -77,7 +77,7 @@ button {
     border: none;
     background-color: #408EC6;
     border-radius: 50px;
-    transition: 0.5s;
+    transition: 0.3s;
     color: #EDEDED;
 }
 
@@ -135,7 +135,7 @@ export default {
   methods: {
     async loadQuestions() {
       try {
-        const res = await fetch('/frontend/public/questionnaire.json'); 
+        const res = await fetch('/frontend/public/questions/questionnaire.json'); 
         const data = await res.json();
         this.questions = data;
       } catch (error) {
