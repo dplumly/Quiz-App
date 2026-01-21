@@ -135,7 +135,7 @@ export default {
   methods: {
     async loadQuestions() {
       try {
-        const res = await fetch('/public/questionnaire.json'); 
+        const res = await fetch('/questionnaire.json'); 
         const data = await res.json();
         this.questions = data;
       } catch (error) {

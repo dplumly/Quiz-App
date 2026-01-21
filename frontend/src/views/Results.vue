@@ -11,8 +11,7 @@
             </div>
         </transition>
 
-        
-
+    
         <video 
             autoplay 
             muted 
