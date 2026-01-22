@@ -9,9 +9,9 @@
             <button v-for="(option, index) in currentQuestion.options" :key="index" @click="selectAnswer(option)" :class="{ isSelected: userAnswers[currentIndex] === option }"> {{ option }}</button>
         </div>
   
-            <button class="back-button"  v-if="currentIndex > 0" @click="prevQuestion">Back</button>
-            <button class="next-button" v-if="currentIndex < questions.length - 1" :disabled="!isAnswerSelected" @click="nextQuestion">Next</button>        
-            <button class="submit-button" v-if="currentIndex === questions.length - 1" :disabled="!isAnswerSelected" @click="submitQuiz">Submit</button>  
+            <button type="button" class="back-button"  v-if="currentIndex > 0" @click="prevQuestion">Back</button>
+            <button type="button" class="next-button" v-if="currentIndex < questions.length - 1" :disabled="!isAnswerSelected" @click="nextQuestion">Next</button>        
+            <button type="button" class="submit-button" v-if="currentIndex === questions.length - 1" :disabled="!isAnswerSelected" @click="submitQuiz">Submit</button>  
 
         <div id="progress-bar-positioning">
             <div class="progress-container">
@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-
 </template>
   
   
