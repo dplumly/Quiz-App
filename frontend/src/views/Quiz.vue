@@ -142,8 +142,12 @@ export default {
         console.error("Failed to load questions:", error);
       }
     },
+    // selectAnswer(option) {
+    //   this.userAnswers[this.currentIndex] = option;
+    // },
+
     selectAnswer(option) {
-      this.userAnswers[this.currentIndex] = option;
+        this.userAnswers.splice(this.currentIndex, 1, option);
     },
     nextQuestion() {
       if (this.currentIndex < this.questions.length - 1) {
